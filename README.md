@@ -9,6 +9,7 @@ Frontend lets you select a `Student_ID`, then calls the backend to return the pr
 
 ## Requirements
 - Python 3.10+
+- Docker (optional, for container build/run)
 
 ## Run The Project (Windows)
 From the project root:
@@ -55,11 +56,46 @@ pip install -r backend/requirements.txt
 python backend/app.py
 ```
 
-## How To Use
-1. Open the app in your browser.
-2. Select a `Student_ID`.
-3. Click **Predict Final Grade**.
-4. View the prediction result.
+## Backend Tests And Lint (Local)
+These are the same checks used by the CI pipeline.
+
+```bash
+cd backend
+pytest test_api.py
+flake8
+```
+
+## Docker (Local)
+Build image:
+```bash
+docker build -t kolojo7/job_assessment:local .
+```
+
+Run container:
+```bash
+docker run --rm -p 5000:5000 kolojo7/job_assessment:local
+```
+
+Health check:
+```bash
+curl http://127.0.0.1:5000/api/health
+```
+
+## How To Run The Pipeline
+1. Push commits to a branch and open a PR into `main` to run checks.
+2. Push to `main` to run checks and build/push the Docker image.
+3. Optional: run manually from the GitHub `Actions` tab using `workflow_dispatch`.
+
+## How To Verify Docker Push
+After a successful `main` pipeline:
+
+```bash
+docker pull kolojo7/job_assessment:latest
+docker run --rm -p 5000:5000 kolojo7/job_assessment:latest
+```
+
+Then open:
+- `http://127.0.0.1:5000`
 
 ## Model And Data
 - Dataset: `backend/student_performance.csv`
