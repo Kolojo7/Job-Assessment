@@ -27,7 +27,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run unit tests
-        run: pytest backend/test_api.py
+        working-directory: backend
+        run: pytest test_api.py
 
       - name: Lint the code
         working-directory: backend
