@@ -68,12 +68,12 @@ flake8
 ## Docker (Local)
 Build image:
 ```bash
-docker build -t kolojo7/job_assessment:local .
+docker build -t job-assessment:dev .
 ```
 
 Run container:
 ```bash
-docker run --rm -p 5000:5000 kolojo7/job_assessment:local
+docker run --rm -p 5000:5000 job-assessment:dev
 ```
 
 Health check:
